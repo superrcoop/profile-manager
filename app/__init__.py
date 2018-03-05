@@ -1,15 +1,8 @@
 from flask import Flask
-from flask_mail import Mail
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'passphrase' 
-app.config['MAIL_SERVER'] = 'smtp.mailtrap.io' 
-app.config['MAIL_PORT'] = '465' 
-# Add your mailtrap username here
-app.config['MAIL_USERNAME'] = '' 
-# Add your mailtrap password here
-app.config['MAIL_PASSWORD'] = '' 
- 
-mail = Mail(app) 
+app.config.from_object(__name__)
+app.config['SECRET_KEY'] = 'Sup3r$3cret'
+app.config['UPLOAD_FOLDER'] = './app/static/uploads'
 
 from app import views
