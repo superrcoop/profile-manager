@@ -4,13 +4,14 @@ Jinja2 Documentation:    http://jinja.pocoo.org/2/documentation/
 Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
-
+import os
 from app import app,db, login_manager
-from .controllers import get_time ,get_uploaded_image , flash_errors , get_safe_url
-from flask_login import login_user, logout_user, current_user, 
+from .controllers import get_time ,get_uploaded_images , flash_errors , is_safe_url
+from flask_login import login_user, logout_user, current_user
 from werkzeug.utils import secure_filename
 from flask import render_template, request, redirect, url_for, flash
 from .forms import AddProfile
+from werkzeug.datastructures import CombinedMultiDict
 
 
 
@@ -32,8 +33,12 @@ def success():
 
 @app.route('/add_profile',methods=['GET', 'POST'])
 def add_profile():
-    form = AddProfile(request.form)
+    form = AddProfile(CombinedMultiDict((request.files, request.form)))
     if request.method == 'POST' and form.validate():
+        f = form.photo.data
+        filename = secure_filename(f.filename)
+        # Get file data and save to your uploads folder
+        f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         flash('Thanks for registering..')
         return redirect(url_for('success')) 
     return render_template('add_profile.html',form=form)
