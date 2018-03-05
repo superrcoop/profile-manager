@@ -1,13 +1,13 @@
 
-Flask-Mail and Flask-WTF tutorial
+Flask Profile Manager
 -------------------------------------
 
-> See Release version 1.0
+> includes Flask-Login and Flask-SQLAlchemy
 
 Description
 -------------------
 
-info3180-lab3
+Template for login management in flask apps with incresed security
 
 
 Getting Started !
@@ -17,11 +17,11 @@ This Web app requires the latest version of [Python and Flask](http://flask.poco
 
 Clone the repository:
 
-`$ git clone https://github.com/superrcoop/info3180-lab3.git`
+`$ git clone https://github.com/superrcoop/profile-manager.git`
 
 Go into the repository:
 
-`$ cd info3180-lab3`
+`$ cd profile-manager`
 
 Create a virtual environment and Install app dependencies:
 
@@ -30,20 +30,6 @@ Create a virtual environment and Install app dependencies:
 `$ source venv/bin/activate`
 
 `$ pip install -r requirements.txt`
-
-To allow Flask-Mail to work you'll need to configure your SMTP in `__init__.py`:
-
-```python 
-app.config['SECRET_KEY'] = 'passphrase' 
-app.config['MAIL_SERVER'] = 'smtp.mailtrap.io' 
-app.config['MAIL_PORT'] = '465' 
-
-# Add your mailtrap username here
-app.config['MAIL_USERNAME'] = '' 
-
-# Add your mailtrap password here
-app.config['MAIL_PASSWORD'] = '' 
-```
 
 Run the app:
 
