@@ -5,10 +5,12 @@ Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
 
-from app import app
-from controllers import get_time ,send_mail
+from app import app,db, login_manager
+from .controllers import get_time ,get_uploaded_image , flash_errors , get_safe_url
+from flask_login import login_user, logout_user, current_user, 
+from werkzeug.utils import secure_filename
 from flask import render_template, request, redirect, url_for, flash
-from forms import ContactForm
+from .forms import AddProfile
 
 
 
@@ -28,14 +30,13 @@ def success():
     return render_template('success.html')
 
 
-@app.route('/contact',methods=['GET', 'POST'])
-def contact():
-    form = ContactForm(request.form)
+@app.route('/add_profile',methods=['GET', 'POST'])
+def add_profile():
+    form = AddProfile(request.form)
     if request.method == 'POST' and form.validate():
-        flash('Thanks for contacting')       
-        send_mail(form.subject.data,form.name.data,form.email.data,form.message.data)
+        flash('Thanks for registering..')
         return redirect(url_for('success')) 
-    return render_template('contact.html',form=form)
+    return render_template('add_profile.html',form=form)
 
 ###
 # The functions below should be applicable to all Flask apps.

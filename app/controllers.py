@@ -2,9 +2,9 @@ import datetime
 import os
 from flask import flash , request, url_for
 try:
-    from urllib.parse import urlparse, urljoin
+    from urllib.parse import urlparse, urljoin # python 3 support
 except ImportError:
-     from urlparse import urlparse, urljoin
+     from urlparse import urlparse, urljoin # python 2 support
 
 
 def get_time():
