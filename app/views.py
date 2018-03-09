@@ -2,7 +2,6 @@
 Flask Documentation:     http://flask.pocoo.org/docs/
 Jinja2 Documentation:    http://jinja.pocoo.org/2/documentation/
 Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
-This file creates your application.
 """
 import os
 from app import app,db, login_manager
@@ -14,11 +13,6 @@ from .forms import AddProfile
 from werkzeug.datastructures import CombinedMultiDict
 
 
-
-###
-# Routing for your application.
-###
-
 @app.route('/')
 def home():
     """Render website's home page."""
@@ -29,6 +23,18 @@ def home():
 def success():
     """Render website's success page."""
     return render_template('success.html')
+
+
+@app.route('/profile')
+def profile():
+    """Render website's profile"""
+    return render_template('profile.html')
+
+
+@app.route('/view_profile')
+def view_profile():
+    """Render website's view_profile"""
+    return render_template('view_profile.html')
 
 
 @app.route('/add_profile',methods=['GET', 'POST'])
@@ -43,9 +49,10 @@ def add_profile():
         return redirect(url_for('success')) 
     return render_template('add_profile.html',form=form)
 
-###
-# The functions below should be applicable to all Flask apps.
-###
+"""
+The functions below should be applicable to all Flask apps.
+
+"""
 
 @app.route('/<file_name>.txt')
 def send_text_file(file_name):

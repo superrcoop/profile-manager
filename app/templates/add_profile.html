@@ -23,51 +23,51 @@
             <form name="sentMessage" id="contactForm" enctype="multipart/form-data" action="{{url_for('add_profile')}}" method="post">
             	{{ form.csrf_token }}
               <div class="control-group">
-                <div class="form-group floating-label-form-group controls mb-0 pb-2 ">
-        
+                <div class="form-group floating-label-form-group controls "><br>
+                  
                   {{ form.fname.label(class="text-secondary")}}<br>
-                  {{ form.fname(class="form-control" ,placeholder="First Name")}}
+                  {{ form.fname(class="form-control" )}}
                   <p class="help-block text-danger">{{ form.fname.errors[0]}}</p>
                   
                 </div>
               </div>
               <div class="control-group">
-                <div class="form-group floating-label-form-group controls mb-0 pb-2 ">
-        
+                <div class="form-group floating-label-form-group controls  ">
                   {{ form.lname.label(class="text-secondary")}}<br>
-                  {{ form.lname(class="form-control" ,placeholder="Last Name")}}
+                  {{ form.lname(class="form-control" )}}
                   <p class="help-block text-danger">{{ form.lname.errors[0]}}</p>
                   
                 </div>
               </div>
               <div class="control-group">
-                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                <div class="form-group floating-label-form-group controls col-sm-4">
+                 
                   {{ form.gender.label(class="text-secondary")}}<br>
-                  {{ form.gender(class="form-control" ,placeholder="Gender")}}
+                  {{ form.gender(class="form-control-sm" )}}
                   <p class="help-block text-danger">{{ form.gender.errors[0]}}</p>
                   
                 </div>
               </div>
               <div class="control-group">
-                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                <div class="form-group floating-label-form-group controls ">
                   {{ form.email.label(class="text-secondary")}}<br>
-                  {{ form.email(class="form-control" ,placeholder="Email")}}
+                  {{ form.email(class="form-control" ,placeholder="e.g example@email.com")}}
                   <p class="help-block text-danger">{{ form.email.errors[0]}}</p>
                   
                 </div>
               </div>
               <div class="control-group">
-                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                <div class="form-group floating-label-form-group controls ">
                   {{ form.location.label(class="text-secondary")}}<br>
-                  {{ form.location(class="form-control" ,placeholder="Location")}}
+                  {{ form.location(class="form-control" ,placeholder="where do you live? e.g Town, Country or Foreign")}}
                   <p class="help-block text-danger">{{ form.location.errors[0]}}</p>
                   
                 </div>
               </div>
               <div class="control-group">
-                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                <div class="form-group floating-label-form-group controls " >
                   {{ form.bio.label(class="text-secondary")}}<br>
-                  {{ form.bio(class="form-control" ,placeholder="Bio")}}<br><br>
+                  {{ form.bio(class="form-control" ,placeholder="tell me something about yourself")}}
                   <p class="help-block text-danger">{{ form.bio.errors[0]}}</p>
                   
                 </div>
@@ -75,8 +75,8 @@
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls  "><br>
                   {{ form.photo.label(class="text-secondary")}}<br>
-                  {{ form.photo(class="form-control" ,placeholder="Upload Photo")}}
-                 <p class="text-secondary">Upload profile photo</p>
+                  {{ form.photo(class="form-control-file" )}}
+                
                 <p class="help-block text-danger">{{ form.photo.errors[0]}}</p>
                   
                 </div>
