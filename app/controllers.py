@@ -5,7 +5,7 @@ try:
     from urllib.parse import urlparse, urljoin # python 3 support
 except ImportError:
      from urlparse import urlparse, urljoin # python 2 support
-
+from .forms import ALLOWED_EXTENSIONS
 
 def get_time():
 	return datetime.datetime.now().year
@@ -17,6 +17,11 @@ def get_uploaded_images():
         for file in files:
             ls.append(os.path.join(subdir, file).split('/')[-1])
     return ls
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 # Flash errors from the form if validation fails
 def flash_errors(form):

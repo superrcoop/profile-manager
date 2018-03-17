@@ -4,6 +4,7 @@ Jinja2 Documentation:    http://jinja.pocoo.org/2/documentation/
 Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 """
 import os
+from flask import send_from_directory
 from app import app,db, login_manager
 from .controllers import get_time ,get_uploaded_images , flash_errors , is_safe_url
 from flask_login import login_user, logout_user, current_user
@@ -53,7 +54,11 @@ def add_profile():
 The functions below should be applicable to all Flask apps.
 
 """
-
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
+    
 @app.route('/<file_name>.txt')
 def send_text_file(file_name):
     """Send your static text file."""
