@@ -1,4 +1,3 @@
-import datetime
 import os
 from flask import flash , request, url_for
 try:
@@ -7,10 +6,7 @@ except ImportError:
      from urlparse import urlparse, urljoin # python 2 support
 from .forms import ALLOWED_EXTENSIONS
 
-def get_time():
-	return datetime.datetime.now().year
-
-def get_uploaded_images():
+def get_profile_photo():
     rootdir = os.getcwd()
     ls = []
     for subdir, dirs, files in os.walk(rootdir + '/app/static/uploads'):
