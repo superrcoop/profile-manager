@@ -21,7 +21,7 @@ class User(db.Model):
     location = db.Column(db.String(80))
     bio = db.Column(db.String(300))
     date_joined = db.Column(db.Date,nullable=False)
-    file_URI = db.Column(db.String(30),nullable=False)
+    file_URI = db.Column(db.String(80),nullable=False)
 
     def __init__(self,fname, lname, email, location, bio, id=None):
         if id: 
