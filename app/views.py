@@ -11,6 +11,7 @@ from flask_login import login_user, logout_user, current_user
 from werkzeug.utils import secure_filename
 from flask import render_template, request, redirect, url_for, flash
 from .forms import AddProfile
+from .models import User
 from werkzeug.datastructures import CombinedMultiDict
 
 
