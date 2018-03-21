@@ -6,7 +6,7 @@ Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 import os
 from flask import send_from_directory
 from app import app,db, login_manager
-from .controllers import get_profile_photo , flash_errors , is_safe_url
+from .controllers import get_profile_photo , flash_errors , is_safe_url, allowed_file
 from flask_login import login_user, logout_user, current_user
 from werkzeug.utils import secure_filename
 from flask import render_template, request, redirect, url_for, flash
@@ -44,16 +44,29 @@ def add_profile():
     error=None 
     form = AddProfile(CombinedMultiDict((request.files, request.form)))
     if request.method == 'POST' and form.validate_on_submit():
-        fname, lname, email,location,bio,photo = [form.fname.data, form.lname.data, form.email.data, form.location.data, form.bio.data, form.photo.data]
-        filename = secure_filename(photo.filename)
-        if not User.query.filter_by(email = email).first():
-            user = User(fname = fname, lname = lname, email = email, location=location,bio=bio)
-            db.session.add(user)
-            db.session.commit()
+        fname, lname, email,location,bio = [form.fname.data, form.lname.data, form.email.data, form.location.data, form.bio.data]
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            if not User.query.filter_by(email = email).first():
+                user = User(fname = fname, lname = lname, email = email, location=location,bio=bio)
+                db.session.add(user)
+                db.session.commit()
+            else:
+                flash('Email already exists')
+                return redirect(request.url)
         else:
-            error = "Email already exists "
-        # Get file data and save to your uploads folder
-        f.save(os.path.join(user.file_URI, filename))
+            flash('File now allowed')
+            return redirect(request.url)
         flash('Thanks for registering..')
         return redirect(url_for('success')) 
     return render_template('add_profile.html',form=form,error=error)
