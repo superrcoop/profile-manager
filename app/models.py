@@ -8,7 +8,7 @@ def get_date():
     return datetime.datetime.now().today()
 
 def generate_file_URI():
-    return UPLOAD_FOLDER+str(uuid.uuid4().get_hex()[0:12])+'/'
+    return '/'+UPLOAD_FOLDER+str(uuid.uuid4().get_hex()[0:12])+'/'
 
 
 class User(db.Model):

@@ -11,7 +11,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-UPLOAD_FOLDER='./app/static/uploads/'
+UPLOAD_FOLDER='./app/static/uploads'
 app.config['SECRET_KEY'] = 'Sup3r$3cret'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
