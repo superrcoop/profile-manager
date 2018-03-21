@@ -52,9 +52,9 @@ def add_profile():
             error='No selected file'
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             if not User.query.filter_by(email = email).first():
                 user = User(fname = fname, lname = lname, email = email, location=location,bio=bio)
+                file.save(os.path.join(user.file_URI, filename))
                 db.session.add(user)
                 db.session.commit()
             else:
