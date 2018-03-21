@@ -44,7 +44,7 @@ def add_profile():
     error=None 
     form = AddProfile(CombinedMultiDict((request.files, request.form)))
     if request.method == 'POST' and form.validate_on_submit():
-        fname, lname, email,location,bio = [form.fname.data, form.lname.data, form.email.data, form.location.data, form.bio.data]
+        fname, lname, email,gender,location,bio = [form.fname.data, form.lname.data, form.email.data,form.gender.data, form.location.data, form.bio.data]
         file = form.photo.data
         # if user does not select file, browser also
         # submit a empty part without filename
@@ -53,7 +53,7 @@ def add_profile():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             if not User.query.filter_by(email = email).first():
-                user = User(fname = fname, lname = lname, email = email, location=location,bio=bio)
+                user = User(fname = fname, lname = lname, email = email,gender=gender, location=location,bio=bio)
                 file.save(os.path.join(user.file_URI, filename))
                 db.session.add(user)
                 db.session.commit()

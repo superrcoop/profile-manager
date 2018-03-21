@@ -1,4 +1,4 @@
-import uuid , datetime ,random
+import uuid , datetime ,random , os, errno
 from . import db, UPLOAD_FOLDER
 
 def generate_id():
@@ -8,7 +8,14 @@ def get_date():
     return datetime.datetime.now().today()
 
 def generate_file_URI():
-    return '/'+UPLOAD_FOLDER+str(uuid.uuid4().get_hex()[0:12])+'/'
+    URI=UPLOAD_FOLDER+'/'+str(uuid.uuid4().get_hex()[0:12])+'/'
+    if not os.path.exists(URI):
+        try:
+            os.makedirs(URI)
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
+    return URI
 
 
 class User(db.Model):
@@ -23,7 +30,7 @@ class User(db.Model):
     date_joined = db.Column(db.Date,nullable=False)
     file_URI = db.Column(db.String(80),nullable=False)
 
-    def __init__(self,fname, lname, email, location, bio, id=None):
+    def __init__(self,fname, lname, email,gender, location, bio, id=None):
         if id: 
             self.id         = id
         else:
@@ -31,6 +38,7 @@ class User(db.Model):
         self.email          = email
         self.fname          = fname 
         self.lname          = lname
+        self.gender         = gender
         self.location       = location
         self.bio            = bio 
         self.date_joined    = get_date()
