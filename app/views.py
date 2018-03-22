@@ -28,15 +28,27 @@ def success():
 
 
 @app.route('/profile')
-def profile():
-    """Render website's profile"""
-    return render_template('profile.html')
+@app.route('/profile/<userid>') 
+def profile(userid=None):
+    """Render website's profile manager or if (userid) , render user profile page"""
+    error=None
+    if userid:
+        user=User.query.filter_by(id=userid).first()
+        if (user):
+            files= get_profile_photo(user.file_URI)
+            return render_template('user_profile.html',files=files,user=user)
+        else :
+            error='User Not Found'
+    return render_template('profile.html',error=error)
 
 
-@app.route('/view_profile')
-def view_profile():
+@app.route('/view_profiles')
+def view_profiles():
     """Render website's view_profile"""
-    return render_template('view_profile.html')
+    users=User.query.all()
+    for user in users:
+        files= get_profile_photo(user.file_URI)
+    return render_template('view_profiles.html',files=files,users=users)
 
 
 @app.route('/add_profile',methods=['GET', 'POST'])
@@ -60,15 +72,15 @@ def add_profile():
             else:
                 error='Email already exists'
         else:
-            error='File now allowed'
+            error='File not allowed'
         flash('Thanks for registering..')
         return redirect(url_for('success')) 
     return render_template('add_profile.html',form=form,error=error)
 
-"""
-The functions below should be applicable to all Flask apps.
 
 """
+The functions below should be applicable to all Flask apps.e8 90p-[\
+  chgseqa   """
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],

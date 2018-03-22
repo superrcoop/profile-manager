@@ -31,9 +31,53 @@ Create a virtual environment and Install app dependencies:
 
 `$ pip install -r requirements.txt`
 
-Run the app:
+Deploy
+--------
 
-`$ python app.py`
+Locally: 
+
+~~~~python
+app.config['SQLALCHEMY_DATABASE_URI'] =  '<database_url>'
+~~~~
+
+`$ python run.py`
 
 
+Heroku:
+
+Now we'll face some problem regarding migrating. What we'll do is below in order to bypass the problems.
+
+~~~~
+heroku run python
+>> import os
+>> os.environ.get('DATABASE_URL')
+~~~~
+
+~~~~python
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ('DATABASE_URL')
+~~~~
+
+Setup database: 
+
+~~~
+python manage.py db init
+python manage.py db migrate
+python manage.py db upgrade
+~~~
+
+View database from heroku-cli:
+
+~~~
+heroku pg:psql
+
+<heroku-app>::DATABASE=>\c
+You are now connected to database "<heroku_database>" as user "<heroku_database_user>"
+
+<heroku-app>::DATABASE=>\dt
+                  List of relations
+ Schema |      Name       |   Type   |     Owner      
+--------+-----------------+----------+----------------
+ public | alembic_version | table    | tamkdcawqlwozy
+ public | profiles        | table    | tamkdcawqlwozy
+(2 rows)
 

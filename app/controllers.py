@@ -3,16 +3,15 @@ from flask import flash , request, url_for
 try:
     from urllib.parse import urlparse, urljoin # python 3 support
 except ImportError:
-     from urlparse import urlparse, urljoin # python 2 support
+    from urlparse import urlparse, urljoin # python 2 support
 from .forms import ALLOWED_EXTENSIONS
 
-def get_profile_photo():
+def get_profile_photo(user_URI):
     rootdir = os.getcwd()
-    ls = []
-    for subdir, dirs, files in os.walk(rootdir + '/app/static/uploads'):
+    for subdir,dirs,files in os.walk(rootdir +user_URI[1:-1]):
         for file in files:
-            ls.append(os.path.join(subdir, file).split('/')[-1])
-    return ls
+            ls=os.path.join(subdir,file).split('/')[-2:]
+    return '/'.join(ls)
 
 def allowed_file(filename):
     return '.' in filename and \
